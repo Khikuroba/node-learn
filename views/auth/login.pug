@@ -1,0 +1,26 @@
+extend ../layout/auth  
+
+block content
+    .container
+      .row
+        .col-sm-9.col-md-7.col-lg-5.mx-auto
+          .card.card-signin.my-5
+            .card-body
+                h5.card-title.text-center Sign In
+                if errors
+                    each error in errors
+                        .alert.alert-danger=error
+                form.form-signin(method="POST")
+                    .form-label-group
+                        input#inputEmail.form-control(type='email', name='email', value= value ? values.email : '', required='', autofocus='')
+                        label(for='inputEmail') Email address
+                    .my-2
+                    .form-label-group
+                        input#inputPassword.form-control(type='password', name='password', value= value ? values.password : '', required='')
+                        label(for='inputPassword') Password
+                    .my-2
+                    .custom-control.custom-checkbox.mb-3
+                        input#customCheck1.custom-control-input(type='checkbox')
+                        label.custom-control-label(for='customCheck1') Remember password
+                    button.btn.btn-lg.btn-primary.btn-block.text-uppercase(type='submit') Sign in
+                    hr.my-4
