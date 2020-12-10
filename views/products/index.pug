@@ -1,0 +1,58 @@
+extend ../layout/common  
+
+block content
+    h1 
+        span.mr-3 Products
+        a.btn.btn-primary.mb-2(href="/users/create") New
+    .d-flex.alighn-items-center
+        form.ml-auto(action="/users/search", method="GET", class="d-flex")
+            input(type="text", class="form-control", name="q")
+            button(class="btn btn-primary ml-2") Search
+    div.container
+        .row.justify-content-between
+            each product in products
+                div.col-auto.shadow-sm.mb-3.mt-3.p-0.rounded-lg(style="max-width: 240px; min-width: 150px; overflow: hidden")
+                    img(src=product.image style="max-width: 100%")
+                    div.p-3
+                        div.m-0.p-0.text-nowrap.font-weight-bold(style="overflow: hidden; text-overflow: ellipsis; max-width: 100%")= product.name
+                        div.mt-2(style="height: 100px; overflow: hidden")= product.description
+                        a.btn.btn-primary.mt-3(href='/cart/add/' + product.id ) Add to cart
+        nav(aria-label='Page navigation example')
+            ul.pagination.justify-content-end
+                if current == 1   
+                    li.page-item.disabled
+                        a.page-link(href='?page=1' tabindex='-1' aria-disabled='true') Previous
+                if current > 1
+                    li.page-item
+                        a.page-link(href=`?page=${parseInt(current) - 1}`) Previous
+                - var i = 1
+                while i <= 5
+                    if current == 1
+                        if i!=1
+                            li.page-item
+                                a.page-link(href=`?page=${i}`)= i++
+                        else 
+                            li.page-item.active
+                                a.page-link(href=`?page=${i}`)= i++
+                    if current == 2
+                        if i!=current
+                            li.page-item
+                                a.page-link(href=`?page=${i}`)= i++
+                        else
+                            li.page-item.active
+                                a.page-link(href=`?page=${i}`)= i++
+                    if current >= 3
+                        if i!=3
+                            li.page-item
+                                a.page-link(href=`?page=${parseInt(current) + i - 3}`)= `${parseInt(current) - 3 + i++}`
+                        else
+                            li.page-item.active
+                                a.page-link(href=`?page=${parseInt(current) + i - 3}`)= `${parseInt(current) - 3 + i++}`
+                        if parseInt(current) + i - 3 > pageNumber 
+                            - i = 6
+                if current < pageNumber
+                    li.page-item
+                        a.page-link(href=`?page=${parseInt(current) + 1}`) Next
+                else 
+                    li.page-item.disabled
+                        a.page-link(href=`?page=${pageNumber}` tabindex='-1' aria-disabled='true') Next
