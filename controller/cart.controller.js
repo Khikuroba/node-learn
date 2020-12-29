@@ -1,6 +1,6 @@
 const db = require("../db");
 
-module.exports.addToCart = (req, res, next) => {
+module.exports.addToCart = async (req, res, next) => {
     var productId = req.params.productId;
     var sessionId = req.signedCookies.sessionId;
 
@@ -9,7 +9,7 @@ module.exports.addToCart = (req, res, next) => {
         return;
     }
 
-    var count = db
+    var count = await db
         .get('sessions')
         .find({
             id: sessionId

@@ -8,6 +8,7 @@ var userRoutes = require('./routes/user.route')
 var authRoutes = require('./routes/auth.route');
 var productRoutes = require('./routes/product.route');
 var cartRoutes = require('./routes/cart.route');
+var transferRoutes = require('./routes/transfer.route');
 
 var authMiddleware = require('./middleware/auth.middleware');
 var sessionMiddleware = require('./middleware/session.middleware');
@@ -36,6 +37,7 @@ app.use('/users', authMiddleware.requireAuth, userRoutes);
 app.use('/auth', authRoutes); 
 app.use('/products', productRoutes);
 app.use('/cart', cartRoutes);
+app.use('/transfer', authMiddleware.requireAuth, transferRoutes);
 
 app.listen(port, function() {
     console.log('Server listen on port: ' + port);
